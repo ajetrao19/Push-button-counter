@@ -1,0 +1,161 @@
+// 7-segment display pins connections 
+int A = 2;
+int B = 3;
+int C = 4;
+int D = 6;
+int DP = 5;
+int E = 7;
+int F = 8;
+int G = 9;
+
+// switchl 1 connection
+int switchUpPin = 13;
+
+// Variable to track the current number
+int counter = 0;
+
+// Variables to handle button debouncing
+int buttonUpState = 0;
+int lastButtonUpState = 0;
+
+void setup() {
+  Serial.begin(9600);
+
+  // Set 7-segment pins as OUTPUT
+  pinMode(A, OUTPUT);
+  pinMode(B, OUTPUT);
+  pinMode(C, OUTPUT);
+  pinMode(D, OUTPUT);
+  pinMode(E, OUTPUT);
+  pinMode(F, OUTPUT);
+  pinMode(G, OUTPUT);
+  pinMode(DP, OUTPUT);
+
+  // Set the button pin as INPUT with pull-up
+  pinMode(switchUpPin, INPUT_PULLUP);
+
+  // Turn off the decimal point
+  digitalWrite(DP, HIGH);
+
+  // Display the initial number (0)
+  changeNumber(counter);
+}
+
+void loop() {
+  // Read the state of the increase button
+  buttonUpState = digitalRead(switchUpPin);
+
+  // Check if the button state has changed (debounce handling)
+  if (buttonUpState != lastButtonUpState) {
+    if (buttonUpState == LOW) { // Button is pressed
+      counter++; // Increase the counter
+      if (counter > 9) { // Loop back to 0 if counter exceeds 9
+        counter = 0;
+      }
+      Serial.println(counter); // Print the counter value to Serial Monitor
+      changeNumber(counter);   // Update the display
+      delay(300);              // Short delay for stability
+    }
+    delay(50); // Debounce delay
+  }
+
+  // Store the current button state as the last state
+  lastButtonUpState = buttonUpState;
+}
+
+// change the displayed number on the 7-segment display
+void changeNumber(int buttonPress) {
+  switch (buttonPress) {
+    case 0:
+      digitalWrite(A, LOW);
+      digitalWrite(B, LOW);
+      digitalWrite(C, LOW);
+      digitalWrite(D, LOW);
+      digitalWrite(E, LOW);
+      digitalWrite(F, LOW);
+      digitalWrite(G, HIGH);
+      break;
+    case 1:
+      digitalWrite(A, HIGH);
+      digitalWrite(B, LOW);
+      digitalWrite(C, LOW);
+      digitalWrite(D, HIGH);
+      digitalWrite(E, HIGH);
+      digitalWrite(F, HIGH);
+      digitalWrite(G, HIGH);
+      break;
+    case 2:
+      digitalWrite(A, LOW);
+      digitalWrite(B, LOW);
+      digitalWrite(C, HIGH);
+      digitalWrite(D, LOW);
+      digitalWrite(E, LOW);
+      digitalWrite(F, HIGH);
+      digitalWrite(G, LOW);
+      break;
+    case 3:
+      digitalWrite(A, LOW);
+      digitalWrite(B, LOW);
+      digitalWrite(C, LOW);
+      digitalWrite(D, LOW);
+      digitalWrite(E, HIGH);
+      digitalWrite(F, HIGH);
+      digitalWrite(G, LOW);
+      break;
+    case 4:
+      digitalWrite(A, HIGH);
+      digitalWrite(B, LOW);
+      digitalWrite(C, LOW);
+      digitalWrite(D, HIGH);
+      digitalWrite(E, HIGH);
+      digitalWrite(F, LOW);
+      digitalWrite(G, LOW);
+      break;
+    case 5:
+      digitalWrite(A, LOW);
+      digitalWrite(B, HIGH);
+      digitalWrite(C, LOW);
+      digitalWrite(D, LOW);
+      digitalWrite(E, HIGH);
+      digitalWrite(F, LOW);
+      digitalWrite(G, LOW);
+      break;
+    case 6:
+      digitalWrite(A, LOW);
+      digitalWrite(B, HIGH);
+      digitalWrite(C, LOW);
+      digitalWrite(D, LOW);
+      digitalWrite(E, LOW);
+      digitalWrite(F, LOW);
+      digitalWrite(G, LOW);
+      break;
+    case 7:
+      digitalWrite(A, LOW);
+      digitalWrite(B, LOW);
+      digitalWrite(C, LOW);
+      digitalWrite(D, HIGH);
+      digitalWrite(E, HIGH);
+      digitalWrite(F, HIGH);
+      digitalWrite(G, HIGH);
+      break;
+    case 8:
+      digitalWrite(A, LOW);
+      digitalWrite(B, LOW);
+      digitalWrite(C, LOW);
+      digitalWrite(D, LOW);
+      digitalWrite(E, LOW);
+      digitalWrite(F, LOW);
+      digitalWrite(G, LOW);
+      break;
+    case 9:
+      digitalWrite(A, LOW);
+      digitalWrite(B, LOW);
+      digitalWrite(C, LOW);
+      digitalWrite(D, LOW);
+      digitalWrite(E, HIGH);
+      digitalWrite(F, LOW);
+      digitalWrite(G, LOW);
+      break;
+  }
+}
+  
