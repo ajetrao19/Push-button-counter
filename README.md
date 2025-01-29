@@ -16,4 +16,4 @@ Working:-
 5. The system includes debouncing logic to prevent unintended multiple increments due to mechanical bouncing of the push button.
 6. Once the count reaches 9, it resets back to 0 and continues counting.
 This project demonstrates digital input handling, debounce techniques, and 7-segment display control, making it an excellent introduction to embedded systems and microcontroller-based counting applications.
-
+ 
